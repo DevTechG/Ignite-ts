@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// TSX = TypeScript + XML
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Header } from "./components/Header"
+import { Post } from './components/Post'
+import { Sidebar } from "./components/Sibebar"
+
+import styles from './App.module.css';
+
+import './global.css'
+
+
+const posts = [
+  {
+    id: 1,
+    author: {
+      avatarUrl: 'https://github.com/DevTechG.png',
+      name: 'DevTechG',
+      role: 'Full-Stack Developer'
+    },
+    content: [
+      { type: 'paragraph', content: 'Fala galera 👋' },
+      { type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portfólio.' },
+      { type: 'link', content: 'jane.design/doctorcare' },
+    ],
+    publishedAt: new Date('2025-03-20 11:30:00'),
+  },
+  {
+    id: 2,
+    author: {
+      avatarUrl: 'https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=50',
+      name: 'DeveloperRandom',
+      role: 'Front-end'
+    },
+    content: [
+      { type: 'paragraph', content: 'Fala galera 👋' },
+      { type: 'paragraph', content: 'Fiz um novo projeto.' },
+      { type: 'link', content: 'jane.design/doctorcare' },
+    ],
+    publishedAt: new Date('2022-05-10 20:00:00'),
+  },
+];
+
+export function App() {
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      <Header />
+      
+      <div className={styles.wrapper}>
+        <Sidebar />
+        <main>
+          {posts.map(post => {
+              return (
+                <Post
+                  key={post.id}
+                  author={post.author}
+                  content={post.content}
+                  publishedAt={post.publishedAt}
+                />
+              )
+            })}
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
-export default App
